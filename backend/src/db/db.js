@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
+require("dotenv");
 
 function connectDB() {
   mongoose
-    .connect("mongodb://localhost:27017/food-view")
+    .connect(
+      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/food-view`
+    )
     .then(() => {
       console.log("MongoDB connected.");
     })
