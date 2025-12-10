@@ -6,12 +6,18 @@ const cors = require("cors");
 
 const app = express();
 
+// 🔹 CORS FIX: Explicitly allow both Localhost and Vercel
 app.use(
   cors({
-    origin: process.env.FRONTEND,
+    origin: [
+      "http://localhost:5173",              // Local Development
+      "https://hire-feed.vercel.app",       // Your Vercel URL (No trailing slash)
+      process.env.FRONTEND                  // Fallback for env variable
+    ].filter(Boolean),                      // Removes empty values if env is missing
     credentials: true,
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -20,6 +26,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes); // FIX: Plural 'posts' is standard convention
+app.use("/api/posts", postRoutes);
 
 module.exports = app;
