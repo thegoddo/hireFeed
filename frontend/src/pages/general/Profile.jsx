@@ -12,7 +12,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const postsRes = await axios.get(
-          `http://localhost:3000/api/posts/feed`
+          `${import.meta.env.BACKEND}/api/posts/feed`
         );
         const userPosts = postsRes.data.filter((p) => p.userId === id);
         setPosts(userPosts);

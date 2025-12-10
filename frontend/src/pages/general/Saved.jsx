@@ -9,7 +9,9 @@ const Saved = ({ currentUser }) => {
   useEffect(() => {
     const fetchSaved = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/posts/feed");
+        const res = await axios.get(
+          `${import.meta.env.BACKEND}/api/posts/feed`
+        );
         const mySaved = res.data.filter(
           (post) => post.saves && post.saves.includes(currentUser?._id)
         );

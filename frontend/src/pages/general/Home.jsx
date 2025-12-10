@@ -29,7 +29,7 @@ const Home = ({ currentUser }) => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/posts/feed?role=${filter}`
+          `${import.meta.env.BACKEND}/api/posts/feed?role=${filter}`
         );
         setPosts(res.data);
       } catch (err) {
@@ -105,8 +105,6 @@ const Home = ({ currentUser }) => {
         </div>
       </div>
 
-      {/* 🔹 MAIN SWIPER AREA */}
-      {/* flex justify-center items-center forces the content to the middle */}
       <div className="flex-1 w-full flex items-center justify-center relative">
         {loading ? (
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500"></div>
