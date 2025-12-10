@@ -28,7 +28,7 @@ const VideoCard = ({ post, currentUser }) => {
 
     try {
       await axios.put(
-        `${import.meta.env.BACKEND}/api/posts/${post._id}/like`,
+        `${import.meta.env.VITE_BACKEND}/api/posts/${post._id}/like`,
         {
           userId: currentUser._id,
         },

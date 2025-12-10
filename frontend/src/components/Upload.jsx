@@ -41,7 +41,7 @@ const Upload = () => {
 
     try {
       // 2. Send to Backend
-      await axios.post(`${import.meta.env.BACKEND}/api/posts`, formData, {
+      await axios.post(`${import.meta.env.VITE_BACKEND}/api/posts`, formData, {
         withCredentials: true, // Important for cookies!
         headers: {
           "Content-Type": "multipart/form-data",
