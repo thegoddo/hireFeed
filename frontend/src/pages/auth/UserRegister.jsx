@@ -23,7 +23,7 @@ const UserRegister = () => {
 
     try {
       await axios.post(
-        `${import.meta.env.BACKEND}/api/auth/user/register`,
+        `${import.meta.env.VITE_BACKEND}/api/auth/user/register`,
         formData,
         {
           withCredentials: true,

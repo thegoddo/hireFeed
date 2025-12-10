@@ -29,7 +29,7 @@ const Home = ({ currentUser }) => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `${import.meta.env.BACKEND}/api/posts/feed?role=${filter}`
+          `${import.meta.env.VITE_BACKEND}/api/posts/feed?role=${filter}`
         );
         setPosts(res.data);
       } catch (err) {

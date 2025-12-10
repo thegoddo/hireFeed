@@ -20,7 +20,7 @@ const UserLogin = () => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.BACKEND}/api/auth/user/login`,
+        `${import.meta.env.VITE_BACKEND}/api/auth/user/login`,
         formData,
         {
           withCredentials: true,

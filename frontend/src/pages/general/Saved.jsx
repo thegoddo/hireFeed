@@ -10,7 +10,7 @@ const Saved = ({ currentUser }) => {
     const fetchSaved = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.BACKEND}/api/posts/feed`
+          `${import.meta.env.VITE_BACKEND}/api/posts/feed`
         );
         const mySaved = res.data.filter(
           (post) => post.saves && post.saves.includes(currentUser?._id)
