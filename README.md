@@ -1,8 +1,9 @@
-# 👔 HireFeed
+# 👔 HireFeed (Mobile only)
 
 > A video-first recruitment platform connecting talent with recruiters.
 
 HireFeed revolutionizes the hiring process by replacing static paper resumes with dynamic video pitches. Job seekers upload short video resumes to showcase their personality and communication skills, while HR professionals and recruiters scroll through a feed to discover, shortlist, and contact their next hire.
+![Screen shot](ss.png)
 
 ## 🚀 Tech Stack
 
