@@ -1,61 +1,40 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../styles/bottom-nav.css";
+import { FaHome, FaPlusSquare, FaBookmark } from "react-icons/fa";
 
 const BottomNav = () => {
   return (
-    <nav className="bottom-nav" role="navigation" aria-label="Bottom">
-      <div className="bottom-nav__inner">
-        <NavLink
-          to="/"
-          end
-          className={({ isActive }) =>
-            `bottom-nav__item ${isActive ? "is-active" : ""}`
-          }
-        >
-          <span className="bottom-nav__icon" aria-hidden="true">
-            {/* home icon */}
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3 10.5 12 3l9 7.5" />
-              <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" />
-            </svg>
-          </span>
-          <span className="bottom-nav__label">Home</span>
-        </NavLink>
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-black border-t border-white/10 z-50 flex items-center justify-around px-2 pb-safe">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `flex flex-col items-center p-2 transition-colors ${
+            isActive ? "text-white" : "text-gray-500 hover:text-gray-300"
+          }`
+        }
+      >
+        <FaHome size={24} />
+        <span className="text-[10px] mt-1 font-medium">Home</span>
+      </NavLink>
 
-        <NavLink
-          to="/saved"
-          className={({ isActive }) =>
-            `bottom-nav__item ${isActive ? "is-active" : ""}`
-          }
-        >
-          <span className="bottom-nav__icon" aria-hidden="true">
-            {/* bookmark icon */}
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
-            </svg>
-          </span>
-          <span className="bottom-nav__label">Saved</span>
-        </NavLink>
-      </div>
+      {/* Center Plus Button with Glow */}
+      <NavLink to="/upload" className="flex items-center justify-center">
+        <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20 mb-4 transform transition active:scale-95 hover:bg-blue-500 border border-white/10">
+          <FaPlusSquare size={24} />
+        </div>
+      </NavLink>
+
+      <NavLink
+        to="/saved"
+        className={({ isActive }) =>
+          `flex flex-col items-center p-2 transition-colors ${
+            isActive ? "text-white" : "text-gray-500 hover:text-gray-300"
+          }`
+        }
+      >
+        <FaBookmark size={20} />
+        <span className="text-[10px] mt-1 font-medium">Saved</span>
+      </NavLink>
     </nav>
   );
 };

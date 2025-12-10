@@ -1,73 +1,89 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../styles/auth-shared.css";
 
 const UserLogin = () => {
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/user/login",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
 
-    const response = await axios.post(
-      "http://localhost:3000/api/auth/user/login",
-      {
-        email,
-        password,
-      },
-      { withCredentials: true }
-    );
+      // ✅ FIX: Save the real user data to LocalStorage
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-    console.log(response.data);
-
-    navigate("/"); // Redirect to home after login
+      // Force reload to update App.jsx state immediately
+      window.location.href = "/";
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Login failed.");
+    }
   };
 
   return (
     <div className="auth-page-wrapper">
-      <div
-        className="auth-card"
-        role="region"
-        aria-labelledby="user-login-title"
-      >
+      <div className="auth-card">
         <header>
-          <h1 id="user-login-title" className="auth-title">
-            Welcome back
-          </h1>
-          <p className="auth-subtitle">
-            Sign in to continue your food journey.
-          </p>
+          <h1 className="auth-title">Welcome Back</h1>
+          <p className="auth-subtitle">Login to access your feed</p>
         </header>
-        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+
+        {error && (
+          <div className="text-red-500 text-sm text-center bg-red-500/10 p-2 rounded">
+            {error}
+          </div>
+        )}
+
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="field-group">
-            <label htmlFor="email">Email</label>
+            <label>Email Address</label>
             <input
-              id="email"
-              name="email"
               type="email"
-              placeholder="you@example.com"
-              autoComplete="email"
+              name="email"
+              placeholder="name@example.com"
+              required
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
+
           <div className="field-group">
-            <label htmlFor="password">Password</label>
+            <label>Password</label>
             <input
-              id="password"
-              name="password"
               type="password"
+              name="password"
               placeholder="••••••••"
-              autoComplete="current-password"
+              required
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
-          <button className="auth-submit" type="submit">
-            Sign In
+
+          <button type="submit" className="auth-submit">
+            Log In
           </button>
         </form>
+
         <div className="auth-alt-action">
-          New here? <a href="/user/register">Create account</a>
+          Don't have an account? <Link to="/register">Sign up</Link>
         </div>
       </div>
     </div>

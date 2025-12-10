@@ -1,53 +1,44 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ReelFeed from "../../components/ReelFeed";
-import "../../styles/reels.css";
+import VideoCard from "../../components/VideoCard";
 
-const Saved = () => {
-  const [videos, setVideos] = useState([]);
+const Saved = ({ currentUser }) => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/food/save", { withCredentials: true })
-      .then((response) => {
-        const savedFoods = response.data.savedFoods.map((item) => ({
-          _id: item.food._id,
-          video: item.food.video,
-          description: item.food.description,
-          likeCount: item.food.likeCount,
-          savesCount: item.food.savesCount,
-          commentsCount: item.food.commentsCount,
-          foodPartner: item.food.foodPartner,
-        }));
-        setVideos(savedFoods);
-      });
-  }, []);
+    const fetchSaved = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/posts/feed");
+        const mySaved = res.data.filter(
+          (post) => post.saves && post.saves.includes(currentUser?._id)
+        );
+        setPosts(mySaved);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const removeSaved = async (item) => {
-    try {
-      await axios.post(
-        "http://localhost:3000/api/food/save",
-        { foodId: item._id },
-        { withCredentials: true }
-      );
-      setVideos((prev) =>
-        prev.map((v) =>
-          v._id === item._id
-            ? { ...v, savesCount: Math.max(0, (v.savesCount ?? 1) - 1) }
-            : v
-        )
-      );
-    } catch {
-      // noop
-    }
-  };
+    if (currentUser) fetchSaved();
+  }, [currentUser]);
 
   return (
-    <ReelFeed
-      items={videos}
-      onSave={removeSaved}
-      emptyMessage="No saved videos yet."
-    />
+    <div className="min-h-screen bg-gray-50 pb-20 pt-6 px-4">
+      <h1 className="text-2xl font-bold mb-6 text-center">Your Shortlist</h1>
+      {loading ? (
+        <p className="text-center">Loading...</p>
+      ) : posts.length === 0 ? (
+        <div className="text-center text-gray-500 mt-10">
+          <p>No saved candidates yet.</p>
+        </div>
+      ) : (
+        posts.map((post) => (
+          <VideoCard key={post._id} post={post} currentUser={currentUser} />
+        ))
+      )}
+    </div>
   );
 };
 

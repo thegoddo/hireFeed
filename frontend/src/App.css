@@ -1,6 +1,9 @@
+@import "tailwindcss";
+
+/* Global Reset (Optional, Tailwind handles most of this) */
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -8,4 +11,57 @@ html,
 body {
   height: 100%;
   width: 100%;
+}
+
+/* Custom Utilities */
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Grid Pattern Background */
+.bg-grid-pattern {
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-color: #000;
+}
+
+:root {
+  --swiper-navigation-color: #ffffff; /* Make arrows white */
+  --swiper-navigation-size: 20px;     /* Icon size inside button */
+}
+
+/* Style the Arrow Buttons */
+.swiper-button-prev,
+.swiper-button-next {
+  background-color: rgba(255, 255, 255, 0.1); /* Glass background */
+  backdrop-filter: blur(10px);
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Hide arrows on mobile (optional, since direction is vertical) */
+@media (max-width: 768px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
 }

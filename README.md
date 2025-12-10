@@ -28,10 +28,11 @@ HireFeed revolutionizes the hiring process by replacing static paper resumes wit
 
 - **Video Resume Feed**: Recruiters can endlessly scroll through short-form video introductions from candidates.
 
-- **Shortlist Candidates**: 
- > - HRs can "Save" promising candidates to a shortlist.
- > - Real-time "Saved by X recruiters" counters using MongoDB atomic operators.
- > - Optimistic UI updates for instant feedback.
+- **Shortlist Candidates**:
+
+  > - HRs can "Save" promising candidates to a shortlist.
+  > - Real-time "Saved by X recruiters" counters using MongoDB atomic operators.
+  > - Optimistic UI updates for instant feedback.
 
 - **Upload Portal**: Candidates can easily record and upload their video pitches.
 
@@ -96,6 +97,7 @@ Open a new terminal window, navigate to the client directory, and install depend
 cd client
 npm install
 ```
+
 **Start the React App**:
 
 ```bash
@@ -112,25 +114,25 @@ npm run dev
 
 **Resume & Feed**
 
-| Method | Endpoint       | Description                           |
-| ------ | -------------- | ------------------------------------- |
-| GET    | `/api/food/feed` | Retrieve the main video feed.         |
-| POST   | `/api/food/save` | Toggle the "saved" status of a video. |
-| GET    | `/api/food/:id`  | Get details for a specific video.     |
+| Method | Endpoint           | Description                           |
+| ------ | ------------------ | ------------------------------------- |
+| GET    | `/api/videos/feed` | Retrieve the main video feed.         |
+| POST   | `/api/videos/save` | Toggle the "saved" status of a video. |
+| GET    | `/api/videos/:id`  | Get details for a specific video.     |
 
 **Auth**
 
-| Method | Endpoint       | Description                           |
-| ------ | -------------- | ------------------------------------- |
-| POST    | `/api/auth/register` | Register a new user.        |
-| POST   | `/api/auth/login` | Log in and receive a session/token. |
+| Method | Endpoint             | Description                         |
+| ------ | -------------------- | ----------------------------------- |
+| POST   | `/api/auth/register` | Register a new user.                |
+| POST   | `/api/auth/login`    | Log in and receive a session/token. |
 
 ## 🧩 Code Highlight: Atomic Updates
 
 To ensure data integrity when multiple users interact with the same video simultaneously, HireFeed uses MongoDB atomic operators to increment/decrement counters:
 
 ```// Backend Logic
-await foodModel.findByIdAndUpdate(foodId, {
+await videoModel.findByIdAndUpdate(videoId, {
 $inc: { savesCount: -1 }
 });
 ```
