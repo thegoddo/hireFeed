@@ -23,7 +23,7 @@ const UserRegister = () => {
 
     try {
       await axios.post(
-        "http://localhost:3000/api/auth/user/register",
+        `${import.meta.env.BACKEND}/api/auth/user/register`,
         formData,
         {
           withCredentials: true,
